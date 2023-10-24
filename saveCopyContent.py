@@ -20,6 +20,7 @@ copied_content = pyperclip.paste()
 
 # 将内容写入文件
 with open(file_path, 'w') as file:
+    copied_content = copied_content.replace('\r\n', '\n')
     file.write(copied_content)
 
 print(f'剪贴板内容已成功写入到 {file_path}')
