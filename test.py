@@ -1,20 +1,24 @@
-import pygetwindow as gw
-import pyautogui
-import time
+import git
+from functions import get_user_choice
 
-def is_screen_on():
-    active_window = gw.getActiveWindow()
+repo_name_path_map = {
+    '1': 'C:/Me/Code/tms.freightapp.gofuze.io',
+    '2': 'C:/Me/Code/tms-backend',
+    '3': 'C:/Me/Code/cp-middleware',
+}
 
-    if active_window is not None:
-        # Check if the active window is visible
-        return active_window.isMaximized or active_window.isActive
+repo_name = get_user_choice(repo_name_path_map, 'Choose git repo:')
 
-    return False
+# # 要求输入 git 仓库名
+# repo_name = input('请输入 git 仓库名:')
+# # 请输入需要被合并的分支名
+# feature_branch = input('请输入需要被合并的分支名:')
+# # 请输入输入接受合并的分支名
+# target_branch = input('请输入输入接受合并的分支名:')
 
-while True:
-    if is_screen_on():
-        print("Screen is on")
-    else:
-        print("Screen is off")
 
-    time.sleep(1)
+# # 获取仓库路径
+# repo_path = repo_name_path_map[repo_name]
+# # 获取仓库
+# repo = git.Repo(repo_path)
+
