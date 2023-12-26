@@ -1,2 +1,2 @@
 @echo off
-"%~dp0/timeTracker.py"
+python "%~dp0/timeTracker.py" %*
