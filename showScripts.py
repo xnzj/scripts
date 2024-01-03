@@ -1,7 +1,10 @@
-# 显示当前目录下所有以 .bat 结尾的文件名称
-
 import os
 
-for file in os.listdir('.'):
+# 获取当前文件所在目录
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+for file in os.listdir(current_dir):
     if file.endswith('.bat'):
-        print(file)
+        # 去掉文件名中的 .bat 后缀
+        file_name = file[:-4]
+        print(file_name)
