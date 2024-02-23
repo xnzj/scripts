@@ -12,8 +12,8 @@ cloud = Cloud(
     cloud=True)
 
 repositories = {
-    1: "tms.freightapp.gofuze.io",
-    2: "tms-backend",
+    1: "tms-backend",
+    2: "tms.freightapp.gofuze.io",
     3: "cp-middleware",
 }
 
@@ -21,7 +21,10 @@ repositories = {
 print("请选择一个仓库：")
 for key, value in repositories.items():
     print(f"{key}. {value}")
-choice = int(input("请输入仓库号码："))
+choice = input("请输入仓库号码(default 1): ")
+if choice == "":
+    choice = 1
+choice = int(choice)
 repository_name = repositories[choice]
 print(f"你选择了 {repository_name}")
 
