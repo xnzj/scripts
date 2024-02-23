@@ -35,7 +35,7 @@ def checkout_or_stash(repository_name, branch_name):
     # 创建 Git 仓库对象
     repo_path = f"C:/Me/Code/{repository_name}"
     repo = git.Repo(repo_path)
-
+    repo.git.fetch()
     # 尝试切换分支
     try:
         repo.git.checkout(branch_name)
