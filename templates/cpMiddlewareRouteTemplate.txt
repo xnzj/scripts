@@ -1,0 +1,3 @@
+    router.{{method}}('/tms{{routePath}}', async (ctx, next) => {
+        ctx.body = await {{serviceName}}(ctx).{{serviceMethod}}((ctx.request.body));
+    });

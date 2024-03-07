@@ -1,0 +1,3 @@
+    async function {{serviceMethod}}(request){
+        return await tmsApp(ctx).{{method}}(`{{routePath}}`, request);
+    }

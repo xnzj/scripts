@@ -1,0 +1,4 @@
+cp_code_gen:
+  project_path: c:/Me/Code/cp-middleware
+  route_path: /app/routes/tms
+  service_path: /app/services/tms
