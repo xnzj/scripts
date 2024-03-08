@@ -12,23 +12,21 @@ project_path = config['project_path']
 routes_path = project_path + config['route_path']
 services_path = project_path + config['service_path']
 
-# 输入 get/post 还有路由地址
-method = input('请输入请求方法(默认 post): ')
-if method == '':
-    method = 'post'
-# method 是否合法
+# 输入路由：GET /api/v1/user
+route = input('请输入路由：')
+# 把路由按空格分割成两部分
+method, routePath = route.split(' ')
 method = method.lower()
+# 判断 method 是否合法
 if method not in ['get', 'post']:
-    print('请求方法不合法')
+    print('method 不合法')
     exit()
 
-# 输入路由地址
-routePath = input('请输入路由地址：')
+# 判断 routePath 是否为空
 if routePath == '':
-    print('路由地址不能为空')
+    print('routePath 不能为空')
     exit()
-# routePath 是否以 / 开头，如果没有，就加上
-print(routePath[0])
+# 判断 routePath 是否以 / 开头
 if routePath[0] != '/':
     routePath = '/' + routePath
 
