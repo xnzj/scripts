@@ -13,18 +13,17 @@ directory_path = script_directory
 # 使用os.listdir()获取目录中的所有文件
 files = os.listdir(directory_path)
 
+# 过滤掉目录中的文件夹, 只保留 .py 文件
+files = [f for f in files if os.path.isfile(os.path.join(directory_path, f)) and f.endswith('.py')]
+
 # 使用os.path.getctime()函数获取文件的创建时间，然后根据创建时间排序文件
-files.sort(key=lambda x: os.path.getctime(os.path.join(directory_path, x)), reverse=True)
+files.sort(key=lambda x: os.path.getmtime(os.path.join(directory_path, x)), reverse=True)
 
 # 获取最新创建的文件名
 if files:
     newest_file_name = files[0]
     # 获取文件名后缀
     file_extension = os.path.splitext(newest_file_name)[1]
-    # 如果文件后缀名不是 .py 则退出程序
-    if file_extension != '.py':
-        print('目录中最新的文件不是 .py 文件')
-        sys.exit()
     # 把文件后缀名替换为 .bat
     bat_file_name = newest_file_name.replace(file_extension, '.bat')
     # 读取模板文件

@@ -8,8 +8,9 @@ from collections import Counter
 
 # 把路由地址转换成驼峰命名
 def url_to_camel_case(url_path):
-    # 分割URL路径
-    parts = url_path.split('/')
+    url_path = url_path.replace('proxy/old/tms/', '').replace('write_new/', '').replace('write/', '')
+    # 分割URL路径, 分隔符包括 / 和 - 和 _ 
+    parts = re.split(r'[/\-_]', url_path)
     
     # 将每个部分的首字母大写
     camel_case_parts = [part.title() for part in parts]
@@ -21,7 +22,7 @@ def url_to_camel_case(url_path):
 
 # 把 routePath 分割成数组，然后判断哪些路由文件名包含这些数组中的元素，忽略大小写，然后比较这些文件的大小，找出最大的那个文件
 def guessRouteFile(routePath, route_files, routes_path):
-    parts = routePath.split('/')
+    parts = re.split(r'[/\-_]', routePath)
     # filter out empty string
     parts = list(filter(lambda part: part != '', parts))
     max_length = 0
