@@ -25,6 +25,9 @@ repo_path = f"C:/Me/Code/{repository_name}"
 repo = git.Repo(repo_path)
 # 尝试切换分支
 try:
+    branchs = repo.branches
+    if branch_name not in branchs:
+        repo.create_head(branch_name)
     repo.git.checkout(branch_name)
     print(f"Successfully checked out branch {branch_name}.")
 except git.GitCommandError:
