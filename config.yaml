@@ -2,3 +2,10 @@ cp_code_gen:
   project_path: c:/Me/Code/cp-middleware
   route_path: /app/routes/tms
   service_path: /app/services/tms
+
+local_mysql:
+  connection: mysql
+  host: 127.0.0.1
+  port: 3306
+  username: root
+  password: root
