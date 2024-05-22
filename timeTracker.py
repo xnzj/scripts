@@ -18,7 +18,7 @@ def clockInTime(n):
 
 def clockOutTime(n):
     before = getBeforeDate(n)
-    randomMinute = random.randint(5, 30)
+    randomMinute = random.randint(0, 10)
     randomMinute = str(randomMinute).zfill(2)
     randomSecond = random.randint(0, 59)
     randomSecond = str(randomSecond).zfill(2)
@@ -57,8 +57,8 @@ def timeRecord(authorization, n):
     data = {
         'userId': 63,
         'type': 'ManualEntry',
-        'moduleName': 'LSO',
-        'projectName': 'LSO',
+        'moduleName': 'TMS',
+        'projectName': 'Control Panel',
         'taskName': 'Coding',
         'startTime': startTime,
         'duration': duration,
