@@ -1,2 +1,2 @@
 @echo off
-"%~dp0/addCommas.py"
+python "%~dp0/addCommas.py" %*
