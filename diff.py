@@ -24,6 +24,8 @@ def compare_and_show_diff(file1_content, file2_content):
     # 使用 code 命令行工具打开 Diff
     subprocess.run(['code-insiders.cmd', '--diff', file1_path, file2_path])
 
+print('复制两个需要比较的字符串，然后 ctrl + c，即可打开 Diff 工具比较两个字符串的差异')
+
 keyboard.add_hotkey('ctrl+c', on_copied)
 
 try:
