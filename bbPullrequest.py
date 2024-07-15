@@ -91,6 +91,10 @@ try:
     workplace = cloud.workspaces.get("logisticsteam-dev")
     repository = workplace.repositories.get(repository_name)
     print(f"title: {branch_name}, sourceBranch: {branch_name}, destinationBranch: {destination_branch}")
+    # 把本地代码推送到远程仓库
+    origin = repo.remotes.origin
+    origin.push()
+    print("Successfully pushed to remote repository.")
     rst = repository.pullrequests.create(branch_name, branch_name, destination_branch)
     pull_request_id = rst.id
     print(f"Successfully created pull request {pull_request_id}.")
