@@ -10,7 +10,7 @@ def getBeforeDate(n):
 
 def clockInTime(n):
     before = getBeforeDate(n)
-    randomMinute = random.randint(10, 20)
+    randomMinute = random.randint(15, 25)
     randomMinute = str(randomMinute).zfill(2)
     randomSecond = random.randint(0, 59)
     randomSecond = str(randomSecond).zfill(2)
@@ -18,7 +18,7 @@ def clockInTime(n):
 
 def clockOutTime(n):
     before = getBeforeDate(n)
-    randomMinute = random.randint(0, 10)
+    randomMinute = random.randint(20, 30)
     randomMinute = str(randomMinute).zfill(2)
     randomSecond = random.randint(0, 59)
     randomSecond = str(randomSecond).zfill(2)
