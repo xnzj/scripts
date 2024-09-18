@@ -8,17 +8,33 @@ def getBeforeDate(n):
     before = today - timedelta(days=n)
     return before.strftime("%Y-%m-%d")
 
-def clockInTime(n):
+def amClockInTime(n):
     before = getBeforeDate(n)
-    randomMinute = random.randint(15, 25)
+    randomMinute = random.randint(25, 30)
     randomMinute = str(randomMinute).zfill(2)
     randomSecond = random.randint(0, 59)
     randomSecond = str(randomSecond).zfill(2)
     return before + 'T09:' + randomMinute + ':' + randomSecond
 
-def clockOutTime(n):
+def amClockOutTime(n):
     before = getBeforeDate(n)
-    randomMinute = random.randint(20, 30)
+    randomMinute = random.randint(0, 4)
+    randomMinute = str(randomMinute).zfill(2)
+    randomSecond = random.randint(0, 59)
+    randomSecond = str(randomSecond).zfill(2)
+    return before + 'T12:' + randomMinute + ':' + randomSecond
+
+def pmClockInTime(n):
+    before = getBeforeDate(n)
+    randomMinute = random.randint(0, 2)
+    randomMinute = str(randomMinute).zfill(2)
+    randomSecond = random.randint(0, 59)
+    randomSecond = str(randomSecond).zfill(2)
+    return before + 'T13:' + randomMinute + ':' + randomSecond
+
+def pmClockOutTime(n, amStartMinute):
+    before = getBeforeDate(n)
+    randomMinute = random.randint(amStartMinute - 5, amStartMinute + 5)
     randomMinute = str(randomMinute).zfill(2)
     randomSecond = random.randint(0, 59)
     randomSecond = str(randomSecond).zfill(2)
@@ -48,25 +64,47 @@ def timeRecord(authorization, n):
         'authorization': authorization,
         'content-type': 'application/json'
     }
-    startTime = clockInTime(n)
-    endTime = clockOutTime(n)
-    # 根据 startTime 和 endTime 计算 duration
-    duration = getDuration(startTime, endTime)
-    # 将 duration 转换为时分秒格式
-    duration = str(duration).split('.')[0]
-    data = {
+    
+    # 上午打卡
+    amStartTime = amClockInTime(n)
+    amStartMinute = int(amStartTime.split(':')[1])
+    amEndTime = amClockOutTime(n)
+    amDuration = getDuration(amStartTime, amEndTime)
+    amDuration = str(amDuration).split('.')[0]
+    
+    amData = {
         'userId': 63,
         'type': 'ManualEntry',
         'moduleName': 'TMS',
         'projectName': 'Control Panel',
         'taskName': 'Coding',
-        'startTime': startTime,
-        'duration': duration,
-        'endTime': endTime
+        'startTime': amStartTime,
+        'duration': amDuration,
+        'endTime': amEndTime
     }
-    response = requests.post(url, headers=headers, json=data)
-    json = response.json()
-    return json
+    amResponse = requests.post(url, headers=headers, json=amData)
+    amJson = amResponse.json()
+    
+    # 下午打卡
+    pmStartTime = pmClockInTime(n)
+    pmEndTime = pmClockOutTime(n, amStartMinute)
+    pmDuration = getDuration(pmStartTime, pmEndTime)
+    pmDuration = str(pmDuration).split('.')[0]
+    
+    pmData = {
+        'userId': 63,
+        'type': 'ManualEntry',
+        'moduleName': 'TMS',
+        'projectName': 'Control Panel',
+        'taskName': 'Coding',
+        'startTime': pmStartTime,
+        'duration': pmDuration,
+        'endTime': pmEndTime
+    }
+    pmResponse = requests.post(url, headers=headers, json=pmData)
+    pmJson = pmResponse.json()
+    
+    return [amJson, pmJson]
 
 def get_start_end_of_week(week_number, exclude_weekend=True):
     # 获取当前年份
@@ -109,6 +147,11 @@ def get_days_range(start_date, end_date):
 if len(sys.argv) < 2:
     n = input('How many days prior to today do you want to check in: ')
     n = int(n)
+    # 打印日期，再次让用户确认
+    target_date = datetime.now() - timedelta(days=n)
+    confirm = input(f"Are you sure to clock in/out for {target_date.strftime('%Y-%m-%d')}? (y/n): ")
+    if confirm.lower() != 'y':
+        exit()
     authorization = getToken()
     json = timeRecord(authorization, n)
     print(json)
@@ -119,6 +162,11 @@ arg1 = sys.argv[1]
 if (arg1 == 'd'):
     n = input('How many days prior to today do you want to check in: ')
     n = int(n)
+    # 打印日期，再次让用户确认
+    target_date = datetime.now() - timedelta(days=n)
+    confirm = input(f"Are you sure to clock in/out for {target_date.strftime('%Y-%m-%d')}? (y/n): ")
+    if confirm.lower() != 'y':
+        exit()
     authorization = getToken()
     json = timeRecord(authorization, n)
     print(json)
